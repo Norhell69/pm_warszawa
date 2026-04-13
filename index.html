@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bartosz Sas — Senior IT Project Manager</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --brg-accent: #2d6a4a;
+      --brg-bright: #3d8a5f;
+      --dark-bg: #0e1c14;
+      --dark-card: #1a2e1f;
+      --text-primary: #f0ede6;
+      --text-muted: #9aaa9a;
+      --text-accent: #4fc07a;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(14,28,20,0.95);
+      border-bottom: 0.5px solid rgba(45,106,74,0.4);
+      padding: 0 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; color: var(--text-primary); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 13px; color: var(--text-muted); text-decoration: none;
+      letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-accent); }
+    .nav-links a.active { color: var(--text-primary); }
+    .lang-toggle { display: flex; gap: 4px; }
+    .lang-btn {
+      font-size: 12px; padding: 3px 8px;
+      border: 0.5px solid rgba(45,106,74,0.5);
+      background: transparent; color: var(--text-muted);
+      border-radius: 4px; cursor: pointer; transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--brg-accent); color: var(--text-primary);
+      border-color: var(--brg-bright);
+    }
+
+    /* LAYOUT */
+    section { padding: 5rem 3rem; max-width: 1100px; margin: 0 auto; }
+    .divider {
+      border: none; border-top: 0.5px solid rgba(45,106,74,0.25);
+      max-width: 1100px; margin: 0 3rem;
+    }
+    .section-label {
+      font-size: 11px; letter-spacing: 0.15em; color: var(--text-accent);
+      text-transform: uppercase; margin-bottom: 3rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::before {
+      content: ''; display: inline-block;
+      width: 24px; height: 1px; background: var(--text-accent);
+    }
+
+    /* HERO */
+    .hero { padding-top: 6rem; padding-bottom: 6rem; }
+    .hero-label {
+      font-size: 11px; letter-spacing: 0.15em; color: var(--text-accent);
+      text-transform: uppercase; margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero-label::before {
+      content: ''; display: inline-block;
+      width: 24px; height: 1px; background: var(--text-accent);
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 500;
+      line-height: 1.15; color: var(--text-primary);
+      margin-bottom: 1.5rem; max-width: 700px;
+    }
+    .hero h1 span { color: var(--text-accent); }
+    .hero-sub {
+      font-size: 16px; color: var(--text-muted); line-height: 1.7;
+      max-width: 560px; margin-bottom: 2.5rem;
+    }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 12px 28px; background: var(--brg-accent); color: var(--text-primary);
+      border: 0.5px solid var(--brg-bright); border-radius: 6px;
+      font-size: 14px; font-weight: 500; cursor: pointer;
+      transition: all 0.2s; text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--brg-bright); }
+    .btn-secondary {
+      padding: 12px 28px; background: transparent; color: var(--text-muted);
+      border: 0.5px solid rgba(154,170,154,0.3); border-radius: 6px;
+      font-size: 14px; cursor: pointer; transition: all 0.2s;
+      display: inline-block; text-decoration: none;
+    }
+    .btn-secondary:hover { border-color: var(--text-muted); color: var(--text-primary); }
+
+    /* PILLARS */
+    .pillars { padding-top: 4rem; padding-bottom: 4rem; }
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 1px; background: rgba(45,106,74,0.2);
+      border-radius: 12px; overflow: hidden;
+    }
+    .pillar-card { background: var(--dark-card); padding: 2rem; }
+    .pillar-num {
+      font-size: 11px; color: var(--text-accent);
+      letter-spacing: 0.1em; margin-bottom: 1rem; font-weight: 500;
+    }
+    .pillar-title { font-size: 18px; font-weight: 500; color: var(--text-primary); margin-bottom: 1rem; }
+    .pillar-line { width: 32px; height: 2px; background: var(--brg-bright); margin-bottom: 1rem; border-radius: 1px; }
+    .pillar-text { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    /* PROJECTS */
+    .projects { padding-top: 4rem; padding-bottom: 4rem; }
+    .projects-placeholder {
+      border: 0.5px dashed rgba(45,106,74,0.4);
+      border-radius: 12px; padding: 3rem; text-align: center;
+    }
+    .projects-placeholder strong {
+      color: var(--text-primary); display: block;
+      font-size: 16px; margin-bottom: 0.5rem; font-weight: 500;
+    }
+    .projects-placeholder p { color: var(--text-muted); font-size: 14px; }
+
+    /* CERTS */
+    .certs { padding-top: 4rem; padding-bottom: 4rem; }
+    .cert-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .cert-tag {
+      padding: 8px 18px; border: 0.5px solid rgba(45,106,74,0.5);
+      border-radius: 6px; font-size: 13px; color: var(--text-muted);
+      background: var(--dark-card); transition: all 0.2s; cursor: default;
+    }
+    .cert-tag:hover { border-color: var(--text-accent); color: var(--text-primary); }
+    .cert-tag strong { color: var(--text-primary); font-weight: 500; }
+
+    /* ABOUT */
+    .about {
+      padding-top: 4rem; padding-bottom: 4rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .about-text h2 { font-size: 22px; font-weight: 500; color: var(--text-primary); margin-bottom: 1.5rem; }
+    .about-text p { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-badge {
+      background: var(--dark-card);
+      border: 0.5px solid rgba(45,106,74,0.3);
+      border-radius: 12px; padding: 2rem;
+    }
+    .about-badge-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 11px 0; border-bottom: 0.5px solid rgba(45,106,74,0.15);
+    }
+    .about-badge-item:last-child { border-bottom: none; }
+    .about-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--text-accent); flex-shrink: 0; margin-top: 5px;
+    }
+    .about-badge-item span { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+    .about-badge-item strong { color: var(--text-primary); font-weight: 500; }
+
+    /* CONTACT */
+    .contact { padding-top: 4rem; padding-bottom: 5rem; }
+    .contact-inner {
+      background: var(--dark-card);
+      border: 0.5px solid rgba(45,106,74,0.3);
+      border-radius: 12px; padding: 3rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: center;
+    }
+    .contact-left h2 { font-size: 22px; font-weight: 500; margin-bottom: 1rem; }
+    .contact-left p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .contact-email {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 1.5rem;
+      font-size: 14px; color: var(--text-accent); text-decoration: none;
+      border-bottom: 0.5px solid rgba(79,192,122,0.3); padding-bottom: 2px;
+    }
+    .contact-email:hover { border-color: var(--text-accent); }
+    .contact-form { display: flex; flex-direction: column; gap: 12px; }
+    .contact-form input, .contact-form textarea {
+      background: rgba(255,255,255,0.04);
+      border: 0.5px solid rgba(45,106,74,0.4);
+      border-radius: 6px; padding: 10px 14px;
+      font-size: 14px; color: var(--text-primary);
+      font-family: inherit; resize: none; outline: none;
+      transition: border-color 0.2s;
+    }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--text-muted); }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--brg-bright); }
+    .contact-form textarea { height: 90px; }
+    .contact-form button {
+      align-self: flex-start; padding: 11px 28px;
+      background: var(--brg-accent); color: var(--text-primary);
+      border: 0.5px solid var(--brg-bright); border-radius: 6px;
+      font-size: 14px; font-weight: 500; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .contact-form button:hover { background: var(--brg-bright); }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid rgba(45,106,74,0.2);
+      padding: 1.5rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-size: 12px; color: var(--text-muted); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 3rem 1.5rem; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .about { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 6px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Bartosz Sas</div>
+  <ul class="nav-links">
+    <li><a href="#projekty" id="nav-projects">Projekty</a></li>
+    <li><a href="#metodyki" id="nav-methods">Metodyki</a></li>
+    <li><a href="#o-mnie" id="nav-about">O mnie</a></li>
+    <li><a href="#kontakt" class="active" id="nav-contact">Kontakt</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-pl" onclick="setLang('pl')">PL</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label" id="hero-label">Senior IT Project Manager · Warszawa</div>
+  <h1 id="hero-h1">Projekty IT<br>w budżecie<br>i <span>na czas.</span></h1>
+  <p class="hero-sub" id="hero-sub">16 lat doświadczenia w zarządzaniu projektami IT — od koncepcji, przez analizę, po wdrożenia produkcyjne w firmach zatrudniających ponad tysiąc pracowników.</p>
+  <div class="hero-cta">
+    <a href="#kontakt" class="btn-primary" id="cta-1">Porozmawiajmy</a>
+    <a href="#projekty" class="btn-secondary" id="cta-2">Zobacz projekty</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PILLARS -->
+<section class="pillars" id="metodyki">
+  <div class="section-label" id="label-methods">Jak pracuję</div>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <div class="pillar-num">01</div>
+      <div class="pillar-title" id="p1-title">Harmonogram</div>
+      <div class="pillar-line"></div>
+      <p class="pillar-text" id="p1-text">Harmonogram to nie dokument — to umowa z zespołem. Pilnuję kamieni milowych i reaguję na ryzyka zanim staną się problemem.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-num">02</div>
+      <div class="pillar-title" id="p2-title">Komunikacja</div>
+      <div class="pillar-line"></div>
+      <p class="pillar-text" id="p2-text">Stakeholderzy wiedzą co się dzieje, zanim zdążą zapytać. Raportuję jasno, eskaluję rzadko, rozwiązuję szybko.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-num">03</div>
+      <div class="pillar-title" id="p3-title">Wdrożenie</div>
+      <div class="pillar-line"></div>
+      <p class="pillar-text" id="p3-text">Projekt nie kończy się na go-live. Dbam o dokumentację, transfer wiedzy i stabilizację po wdrożeniu.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section class="projects" id="projekty">
+  <div class="section-label" id="label-projects">Projekty</div>
+  <div class="projects-placeholder">
+    <strong id="proj-title">Case studies wkrótce</strong>
+    <p id="proj-sub">Ta sekcja zostanie uzupełniona o wybrane projekty i case studies.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CERTS -->
+<section class="certs" id="certyfikaty">
+  <div class="section-label" id="label-certs">Certyfikaty &amp; metodyki</div>
+  <div class="cert-tags">
+    <div class="cert-tag"><strong>PRINCE2</strong>&nbsp;&nbsp;Practitioner</div>
+    <div class="cert-tag"><strong>Agile</strong>&nbsp;&nbsp;Project Management</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section class="about" id="o-mnie">
+  <div class="about-text">
+    <div class="section-label" id="label-about">O mnie</div>
+    <h2 id="about-h2">Project manager z Warszawy</h2>
+    <p id="about-p1">Absolwent AGH w Krakowie — umysł ścisły z wysoką zdolnością analityczną. Specjalizuję się w projektach IT obejmujących pełen cykl: od fazy koncepcji i analizy, przez projektowanie i wizualizację rozwiązań, aż po wdrożenia produkcyjne.</p>
+    <p id="about-p2">Przez 16 lat pracowałem w dużych organizacjach o złożonej strukturze — w sektorze prywatnym i publicznym. Rozumiem specyfikę administracji i instytucji publicznych. Stawiam na mockupy i jasną komunikację z zarządem — tak, żeby decyzje zapadały szybko i na bazie rzeczywistego obrazu rozwiązania.</p>
+  </div>
+  <div class="about-badge">
+    <div class="about-badge-item">
+      <div class="about-dot"></div>
+      <span><strong>AGH Kraków</strong> — absolwent, kierunek techniczny</span>
+    </div>
+    <div class="about-badge-item">
+      <div class="about-dot"></div>
+      <span><strong>16 lat</strong> w zarządzaniu projektami IT</span>
+    </div>
+    <div class="about-badge-item">
+      <div class="about-dot"></div>
+      <span>Sektor <strong>publiczny i prywatny</strong>, organizacje 1000+</span>
+    </div>
+    <div class="about-badge-item">
+      <div class="about-dot"></div>
+      <span>Koncepcja → analiza → <strong>wizualizacja</strong> → wdrożenie</span>
+    </div>
+    <div class="about-badge-item">
+      <div class="about-dot"></div>
+      <span>Mockupy i <strong>komunikacja z zarządem</strong> jako standard</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section class="contact" id="kontakt">
+  <div class="section-label" id="label-contact">Kontakt</div>
+  <div class="contact-inner">
+    <div class="contact-left">
+      <h2 id="contact-h2">Porozmawiajmy o Twoim projekcie</h2>
+      <p id="contact-p">Jeśli szukasz doświadczonego project managera do złożonego wdrożenia — napisz. Odpowiem w ciągu 24 godzin.</p>
+      <a href="mailto:pm.bartosz.sas@gmail.com" class="contact-email">pm.bartosz.sas@gmail.com</a>
+    </div>
+    <div class="contact-form">
+      <input type="text" id="form-name" placeholder="Imię i nazwisko">
+      <input type="email" id="form-email" placeholder="E-mail">
+      <textarea id="form-msg" placeholder="Wiadomość"></textarea>
+      <button type="button" id="form-btn">Wyślij wiadomość</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Bartosz Sas</p>
+  <p>Senior IT Project Manager · Warsaw</p>
+</footer>
+
+<script>
+const t = {
+  pl: {
+    'hero-label': 'Senior IT Project Manager · Warszawa',
+    'hero-sub': '16 lat doświadczenia w zarządzaniu projektami IT — od koncepcji, przez analizę, po wdrożenia produkcyjne w firmach zatrudniających ponad tysiąc pracowników.',
+    'cta-1': 'Porozmawiajmy', 'cta-2': 'Zobacz projekty',
+    'label-methods': 'Jak pracuję',
+    'p1-title': 'Harmonogram',
+    'p1-text': 'Harmonogram to nie dokument — to umowa z zespołem. Pilnuję kamieni milowych i reaguję na ryzyka zanim staną się problemem.',
+    'p2-title': 'Komunikacja',
+    'p2-text': 'Stakeholderzy wiedzą co się dzieje, zanim zdążą zapytać. Raportuję jasno, eskaluję rzadko, rozwiązuję szybko.',
+    'p3-title': 'Wdrożenie',
+    'p3-text': 'Projekt nie kończy się na go-live. Dbam o dokumentację, transfer wiedzy i stabilizację po wdrożeniu.',
+    'label-projects': 'Projekty',
+    'proj-title': 'Case studies wkrótce',
+    'proj-sub': 'Ta sekcja zostanie uzupełniona o wybrane projekty i case studies.',
+    'label-certs': 'Certyfikaty & metodyki',
+    'label-about': 'O mnie',
+    'about-h2': 'Project manager z Warszawy',
+    'about-p1': 'Absolwent AGH w Krakowie — umysł ścisły z wysoką zdolnością analityczną. Specjalizuję się w projektach IT obejmujących pełen cykl: od fazy koncepcji i analizy, przez projektowanie i wizualizację rozwiązań, aż po wdrożenia produkcyjne.',
+    'about-p2': 'Przez 16 lat pracowałem w dużych organizacjach o złożonej strukturze — w sektorze prywatnym i publicznym. Rozumiem specyfikę administracji i instytucji publicznych. Stawiam na mockupy i jasną komunikację z zarządem — tak, żeby decyzje zapadały szybko i na bazie rzeczywistego obrazu rozwiązania.',
+    'label-contact': 'Kontakt',
+    'contact-h2': 'Porozmawiajmy o Twoim projekcie',
+    'contact-p': 'Jeśli szukasz doświadczonego project managera do złożonego wdrożenia — napisz. Odpowiem w ciągu 24 godzin.',
+    'form-name': 'Imię i nazwisko', 'form-email': 'E-mail', 'form-msg': 'Wiadomość', 'form-btn': 'Wyślij wiadomość',
+    'nav-projects': 'Projekty', 'nav-methods': 'Metodyki', 'nav-about': 'O mnie', 'nav-contact': 'Kontakt',
+  },
+  en: {
+    'hero-label': 'Senior IT Project Manager · Warsaw',
+    'hero-sub': '16 years of IT project management experience — from concept through analysis to production deployments in enterprises with 1,000+ employees.',
+    'cta-1': 'Get in touch', 'cta-2': 'See projects',
+    'label-methods': 'How I work',
+    'p1-title': 'Schedule',
+    'p1-text': "A schedule isn't a document — it's a commitment. I track milestones and manage risks before they become issues.",
+    'p2-title': 'Communication',
+    'p2-text': 'Stakeholders always know where things stand — before they ask. Clear reporting, rare escalations, fast resolution.',
+    'p3-title': 'Delivery',
+    'p3-text': "A project doesn't end at go-live. I ensure documentation, knowledge transfer, and post-deployment stability.",
+    'label-projects': 'Projects',
+    'proj-title': 'Case studies coming soon',
+    'proj-sub': 'This section will be filled with selected projects and case studies.',
+    'label-certs': 'Certifications & methods',
+    'label-about': 'About',
+    'about-h2': 'Project manager based in Warsaw',
+    'about-p1': "Graduate of AGH University of Science and Technology in Kraków — analytical by training, precise by practice. I specialize in end-to-end IT projects: from concept and analysis through solution design and visualization to production deployment.",
+    'about-p2': "Over 16 years I have worked in large, complex organizations — both private and public sector. I understand how public institutions operate. I rely on mockups and clear executive communication to ensure decisions are made quickly, based on a real picture of the solution.",
+    'label-contact': 'Contact',
+    'contact-h2': "Let's talk about your project",
+    'contact-p': 'Looking for an experienced project manager for a complex implementation? Get in touch — I respond within 24 hours.',
+    'form-name': 'Full name', 'form-email': 'Email', 'form-msg': 'Message', 'form-btn': 'Send message',
+    'nav-projects': 'Projects', 'nav-methods': 'Methods', 'nav-about': 'About', 'nav-contact': 'Contact',
+  }
+};
+
+function setLang(lang) {
+  const data = t[lang];
+  for (const [id, val] of Object.entries(data)) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = val;
+    else if (el.tagName === 'BUTTON') el.textContent = val;
+    else if (el.tagName === 'A' && !el.classList.contains('contact-email')) el.textContent = val;
+    else el.innerHTML = val;
+  }
+  document.getElementById('btn-pl').classList.toggle('active', lang === 'pl');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+}
+</script>
+
+</body>
+</html>
